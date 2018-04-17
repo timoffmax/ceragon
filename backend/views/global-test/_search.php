@@ -1,0 +1,58 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model common\models\GlobalTestSearch */
+/* @var $form yii\widgets\ActiveForm */
+?>
+
+<div class="global-test-search">
+
+    <?php $form = ActiveForm::begin([
+        'action' => ['index'],
+        'method' => 'get',
+        'options' => [
+            'data-pjax' => 1
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'id') ?>
+
+    <?= $form->field($model, 'FACILITY') ?>
+
+    <?= $form->field($model, 'STATIONID') ?>
+
+    <?= $form->field($model, 'UUTNAME') ?>
+
+    <?= $form->field($model, 'PARTNUMBER') ?>
+
+    <?php // echo $form->field($model, 'SERIALNUMBER') ?>
+
+    <?php // echo $form->field($model, 'TECHNAME') ?>
+
+    <?php // echo $form->field($model, 'TESTDATE') ?>
+
+    <?php // echo $form->field($model, 'TIMESTART') ?>
+
+    <?php // echo $form->field($model, 'TIMESTOP') ?>
+
+    <?php // echo $form->field($model, 'UUTPLACE') ?>
+
+    <?php // echo $form->field($model, 'TESTMODE') ?>
+
+    <?php // echo $form->field($model, 'GLOBALRESULT') ?>
+
+    <?php // echo $form->field($model, 'INDEXRANGE') ?>
+
+    <?php // echo $form->field($model, 'VERSIONS') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
