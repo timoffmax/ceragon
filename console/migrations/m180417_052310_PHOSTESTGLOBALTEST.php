@@ -32,10 +32,6 @@ class m180417_052310_PHOSTESTGLOBALTEST extends Migration
               `VERSIONS` varchar(100) CHARACTER SET utf8 DEFAULT NULL
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci DELAY_KEY_WRITE=1 ROW_FORMAT=FIXED;
         ');
-
-        // Load data
-        $sql = file_get_contents('console/migrations/PHOSTESTGLOBALTEST.sql');
-        $this->execute($sql);
     }
 
     /**
