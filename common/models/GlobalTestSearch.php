@@ -67,8 +67,8 @@ class GlobalTestSearch extends GlobalTest
             'INDEXRANGE' => $this->INDEXRANGE,
         ]);
 
-        $query->andFilterWhere(['like', 'FACILITY', $this->FACILITY])
-            ->andFilterWhere(['like', 'STATIONID', $this->STATIONID])
+        $query->andFilterWhere(['=', 'FACILITY', $this->FACILITY])
+            ->andFilterWhere(['=', 'STATIONID', $this->STATIONID])
             ->andFilterWhere(['like', 'UUTNAME', $this->UUTNAME])
             ->andFilterWhere(['like', 'PARTNUMBER', $this->PARTNUMBER])
             ->andFilterWhere(['like', 'SERIALNUMBER', $this->SERIALNUMBER])

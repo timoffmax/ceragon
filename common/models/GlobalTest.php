@@ -73,4 +73,55 @@ class GlobalTest extends \yii\db\ActiveRecord
             'VERSIONS' => 'Versions',
         ];
     }
+
+    /**
+     * Return distinct facilities as array
+     *
+     * @return array|null
+     */
+    public static function getFacilities(): ?array
+    {
+        $facilities = self::find()
+            ->select('facility')
+            ->distinct()
+            ->asArray()
+            ->column()
+        ;
+
+        if (!empty($facilities)) {
+            $facilities = array_combine($facilities, $facilities);
+        }
+
+        return $facilities;
+    }
+
+    /**
+     * Return distinct values of the field as array
+     *
+     * @param string $fieldName
+     * @return array|null
+     */
+    public static function getDistinctValues(string $fieldName, array $conditions = [], bool $filterEmpty = false): ?array
+    {
+        if ($filterEmpty) {
+            // Don't include empty conditions
+            $conditions = array_filter($conditions, function ($value) {
+                return !empty($value);
+            });
+        }
+
+        // Get values
+        $values = self::find()
+            ->select($fieldName)
+            ->where($conditions)
+            ->column()
+        ;
+
+        // Copy values to keys
+        if (!empty($values)) {
+            $values = array_combine($values, $values);
+        }
+
+        return $values;
+    }
 }

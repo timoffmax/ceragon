@@ -38,9 +38,18 @@ class GlobalTestController extends Controller
         $searchModel = new GlobalTestSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+
+        // Prepare filters values
+        $searchParams = \Yii::$app->request->get('GlobalTestSearch');
+
+        $stations = GlobalTest::getDistinctValues('STATIONID', ['FACILITY' => $searchParams['FACILITY']], true);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'filters' => [
+                'stations' => $stations,
+            ],
         ]);
     }
 
