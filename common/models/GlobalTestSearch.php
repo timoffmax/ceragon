@@ -69,8 +69,8 @@ class GlobalTestSearch extends GlobalTest
 
         $query->andFilterWhere(['=', 'FACILITY', $this->FACILITY])
             ->andFilterWhere(['=', 'STATIONID', $this->STATIONID])
-            ->andFilterWhere(['like', 'UUTNAME', $this->UUTNAME])
-            ->andFilterWhere(['like', 'PARTNUMBER', $this->PARTNUMBER])
+            ->andFilterWhere(['=', 'UUTNAME', $this->UUTNAME])
+            ->andFilterWhere(['=', 'PARTNUMBER', $this->PARTNUMBER])
             ->andFilterWhere(['like', 'SERIALNUMBER', $this->SERIALNUMBER])
             ->andFilterWhere(['like', 'TECHNAME', $this->TECHNAME])
             ->andFilterWhere(['like', 'TESTMODE', $this->TESTMODE])

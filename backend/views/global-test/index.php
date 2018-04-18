@@ -30,32 +30,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'contentOptions' => ['style' => 'width: 50px;']
+            ],
             [
                 'attribute' => 'FACILITY',
                 'filter' => Select2::widget([
                     'model' => $searchModel,
                     'attribute' => 'FACILITY',
-                    'data' => GlobalTest::getFacilities(),
-                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'data' => $filters['facilities'],
                     'hideSearch' => true,
                     'options' => [
                         'id' => 'select-facility',
-                        'placeholder' => 'Select facility',
-                        'value' => isset($_GET['FACILITY']) ? $_GET['FACILITY'] : null,
+                        'placeholder' => 'Select',
+                        'value' => $searchModel->FACILITY,
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
-                    'pluginEvents' => [
-                        "change" => "function(e) {
-                            // Reset selected value for station select
-                            $('#select-station').reset();
-                            $('#select-station').trigger('change');
-                            
-                        }",
-                    ],
                 ]),
+                'contentOptions' => ['style' => 'width: 100px;']
             ],
             [
                 'attribute' => 'STATIONID',
@@ -63,37 +58,85 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'attribute' => 'STATIONID',
                     'data' => $filters['stations'],
-                    'theme' => Select2::THEME_BOOTSTRAP,
                     'hideSearch' => true,
                     'options' => [
                         'id' => 'select-station',
-                        'placeholder' => 'Select station',
-                        'value' => isset($_GET['STATIONID']) ? $_GET['STATIONID'] : null,
+                        'placeholder' => 'Select',
+                        'value' => $searchModel->STATIONID,
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
-                    'pluginEvents' => [
-                        "select2:selecting" => "function(data) {
-                            
-                        }",
+                ]),
+                'contentOptions' => ['style' => 'width: 150px;']
+            ],
+            [
+                'attribute' => 'UUTNAME',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'UUTNAME',
+                    'data' => $filters['uutnames'],
+                    'hideSearch' => true,
+                    'options' => [
+                        'placeholder' => 'Select',
+                        'value' => $searchModel->UUTNAME,
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
                     ],
                 ]),
+                'contentOptions' => ['style' => 'width: 150px;']
             ],
-            'UUTNAME',
-            'PARTNUMBER',
-            'SERIALNUMBER',
-            'TECHNAME',
-            'TESTDATE',
-            'TIMESTART',
-//            'TIMESTOP',
-            'UUTPLACE',
-//            'TESTMODE',
-            'GLOBALRESULT',
-//            'INDEXRANGE',
-//            'VERSIONS',
+            [
+                'attribute' => 'PARTNUMBER',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'PARTNUMBER',
+                    'data' => $filters['partnumbers'],
+                    'hideSearch' => true,
+                    'options' => [
+                        'placeholder' => 'Select',
+                        'value' => $searchModel->PARTNUMBER,
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ]),
+                'contentOptions' => ['style' => 'width: 150px;']
+            ],
+            [
+                'attribute' => 'SERIALNUMBER',
+                'contentOptions' => ['style' => 'width: 150px;']
+            ],
+            [
+                'attribute' => 'TESTDATE',
+                'contentOptions' => ['style' => 'width: 100px;']
+            ],
+            [
+                'attribute' => 'TIMESTART',
+                'contentOptions' => ['style' => 'width: 70px;']
+            ],
+            [
+                'label' => 'Test time',
+                'value' => function ($data) {
+                    $startTime = \DateTime::createFromFormat('H:i:s', $data->TIMESTART);
+                    $endTime = \DateTime::createFromFormat('H:i:s', $data->TIMESTOP);
 
-            ['class' => 'yii\grid\ActionColumn'],
+                    $duration = ($endTime->getTimestamp() - $startTime->getTimestamp());
+
+                    return number_format($duration / 60, 2) . 'm';
+                },
+                'format' => 'raw',
+                'contentOptions' => ['style' => 'width: 70px;']
+            ],
+            [
+                'attribute' => 'UUTPLACE',
+                'contentOptions' => ['style' => 'width: 50px;']
+            ],
+            [
+                'attribute' => 'GLOBALRESULT',
+                'contentOptions' => ['style' => 'width: 100px;']
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

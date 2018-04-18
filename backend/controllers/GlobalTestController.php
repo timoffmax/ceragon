@@ -38,18 +38,23 @@ class GlobalTestController extends Controller
         $searchModel = new GlobalTestSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        // Prepare values of dependent filters
+        $dependentParams = [
+            'FACILITY' => $searchModel->FACILITY ?? null,
+            'STATIONID' => $searchModel->STATIONID ?? null,
+            'UUTNAME' => $searchModel->UUTNAME ?? null,
+            'PARTNUMBER' => $searchModel->PARTNUMBER ?? null,
+        ];
 
-        // Prepare filters values
-        $searchParams = \Yii::$app->request->get('GlobalTestSearch');
-
-        $stations = GlobalTest::getDistinctValues('STATIONID', ['FACILITY' => $searchParams['FACILITY']], true);
+        $facilities = GlobalTest::getDistinctValues('FACILITY', $dependentParams, true);
+        $stations = GlobalTest::getDistinctValues('STATIONID', $dependentParams, true);
+        $uutnames = GlobalTest::getDistinctValues('UUTNAME', $dependentParams, true);
+        $partnumbers = GlobalTest::getDistinctValues('PARTNUMBER', $dependentParams, true);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'filters' => [
-                'stations' => $stations,
-            ],
+            'filters' => compact('facilities','stations', 'uutnames', 'partnumbers'),
         ]);
     }
 

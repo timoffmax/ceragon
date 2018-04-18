@@ -58,41 +58,20 @@ class GlobalTest extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'FACILITY' => 'Facility',
-            'STATIONID' => 'Stationid',
-            'UUTNAME' => 'Uutname',
-            'PARTNUMBER' => 'Partnumber',
-            'SERIALNUMBER' => 'Serialnumber',
+            'STATIONID' => 'Station ID',
+            'UUTNAME' => 'UUT Name',
+            'PARTNUMBER' => 'Part Number',
+            'SERIALNUMBER' => 'S/Number',
             'TECHNAME' => 'Techname',
-            'TESTDATE' => 'Testdate',
-            'TIMESTART' => 'Timestart',
+            'TESTDATE' => 'Test Date',
+            'TIMESTART' => 'Test Start',
             'TIMESTOP' => 'Timestop',
-            'UUTPLACE' => 'Uutplace',
+            'UUTPLACE' => 'Place',
             'TESTMODE' => 'Testmode',
-            'GLOBALRESULT' => 'Globalresult',
+            'GLOBALRESULT' => 'Result',
             'INDEXRANGE' => 'Indexrange',
             'VERSIONS' => 'Versions',
         ];
-    }
-
-    /**
-     * Return distinct facilities as array
-     *
-     * @return array|null
-     */
-    public static function getFacilities(): ?array
-    {
-        $facilities = self::find()
-            ->select('facility')
-            ->distinct()
-            ->asArray()
-            ->column()
-        ;
-
-        if (!empty($facilities)) {
-            $facilities = array_combine($facilities, $facilities);
-        }
-
-        return $facilities;
     }
 
     /**
@@ -113,6 +92,7 @@ class GlobalTest extends \yii\db\ActiveRecord
         // Get values
         $values = self::find()
             ->select($fieldName)
+            ->distinct()
             ->where($conditions)
             ->column()
         ;
