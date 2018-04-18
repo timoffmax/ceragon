@@ -1,1 +1,0 @@
-let sectionIdSelect = $('#change');
