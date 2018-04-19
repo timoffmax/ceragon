@@ -124,8 +124,14 @@ const RESULT_TO_LABEL_TYPE = [
             [
                 'label' => 'Test time',
                 'value' => function ($data) {
-                    $startTime = \DateTime::createFromFormat('H:i:s', $data->TIMESTART);
-                    $endTime = \DateTime::createFromFormat('H:i:s', $data->TIMESTOP);
+                    $startTime = \DateTime::createFromFormat('Y-m-d H:i:s', $data->TESTDATE . ' ' . $data->TIMESTART);
+                    $endTime = \DateTime::createFromFormat('Y-m-d H:i:s', $data->TESTDATE . ' ' . $data->TIMESTOP);
+
+                    // If test was end in next day
+                    if ($endTime->format('H') < $startTime->format('H')) {
+                        // Add one day to end time
+                        $endTime->add(new \DateInterval('P1D'));
+                    }
 
                     $duration = ($endTime->getTimestamp() - $startTime->getTimestamp());
 
