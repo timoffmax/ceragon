@@ -12,6 +12,8 @@ use common\models\GlobalTest;
  */
 class GlobalTestSearch extends GlobalTest
 {
+    public $testDuration;
+
     /**
      * @inheritdoc
      */
@@ -19,6 +21,7 @@ class GlobalTestSearch extends GlobalTest
     {
         return [
             [['id', 'UUTPLACE', 'INDEXRANGE'], 'integer'],
+            [['testDuration'], 'safe'],
             [['FACILITY', 'STATIONID', 'UUTNAME', 'PARTNUMBER', 'SERIALNUMBER', 'TECHNAME', 'TESTDATE', 'TIMESTART', 'TIMESTOP', 'TESTMODE', 'GLOBALRESULT', 'VERSIONS'], 'safe'],
         ];
     }
@@ -76,6 +79,11 @@ class GlobalTestSearch extends GlobalTest
             ->andFilterWhere(['like', 'TESTMODE', $this->TESTMODE])
             ->andFilterWhere(['like', 'GLOBALRESULT', $this->GLOBALRESULT])
             ->andFilterWhere(['like', 'VERSIONS', $this->VERSIONS]);
+
+        // Filter by test duration
+        if (!empty($this->testDuration)) {
+            $query->andWhere('TIME_TO_SEC(TIMEDIFF(TIMESTOP, TIMESTART)) / 60 >= ' . $this->testDuration);
+        }
 
         return $dataProvider;
     }

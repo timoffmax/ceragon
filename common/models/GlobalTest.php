@@ -71,7 +71,30 @@ class GlobalTest extends \yii\db\ActiveRecord
             'GLOBALRESULT' => 'Result',
             'INDEXRANGE' => 'Indexrange',
             'VERSIONS' => 'Versions',
+            'testDuration' => 'Test time',
         ];
+    }
+
+    /**
+     * Return test duration
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function getTestDuration()
+    {
+        $startTime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->TESTDATE . ' ' . $this->TIMESTART);
+        $endTime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->TESTDATE . ' ' . $this->TIMESTOP);
+
+        // If test was end in next day
+        if ($endTime->format('H') < $startTime->format('H')) {
+            // Add one day to end time
+            $endTime->add(new \DateInterval('P1D'));
+        }
+
+        $duration = ($endTime->getTimestamp() - $startTime->getTimestamp());
+
+        return number_format($duration / 60, 2) . 'm';
     }
 
     /**
