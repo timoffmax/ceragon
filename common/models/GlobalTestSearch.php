@@ -52,6 +52,26 @@ class GlobalTestSearch extends GlobalTest
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'attributes' => [
+                'FACILITY',
+                'STATIONID',
+                'UUTNAME',
+                'PARTNUMBER',
+                'SERIALNUMBER',
+                'TESTDATE',
+                'TIMESTART',
+                'UUTPLACE',
+                'GLOBALRESULT',
+                'testDuration' => [
+                    'asc' => ['TIME_TO_SEC(TIMEDIFF(TIMESTOP, TIMESTART))' => SORT_ASC],
+                    'desc' => ['TIME_TO_SEC(TIMEDIFF(TIMESTOP, TIMESTART))' => SORT_DESC],
+                    'label' => 'Test Time',
+                    'default' => SORT_ASC
+                ],
+            ]
+        ]);
+
         $this->load($params);
 
         if (!$this->validate()) {
