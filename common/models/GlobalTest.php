@@ -83,10 +83,10 @@ class GlobalTest extends \yii\db\ActiveRecord
     public static function getDistinctValues(string $fieldName, array $conditions = [], bool $filterEmpty = false): ?array
     {
         if ($filterEmpty) {
-            // Don't include empty conditions
-            $conditions = array_filter($conditions, function ($value) {
-                return !empty($value);
-            });
+            // Don't include empty conditions and don't filter by current field
+            $conditions = array_filter($conditions, function ($value, $key) use ($fieldName) {
+                return !empty($value) && $key !== $fieldName;
+            }, ARRAY_FILTER_USE_BOTH);
         }
 
         // Get values
